@@ -49,4 +49,33 @@ question3 <- ggplot(final.insurance, aes(x = year, y = share_medicaid)) +
 question3
 
 
-#Question 4
+#question 4
+library(tidyverse)  
+mcaid.data <- read_tsv("data/output/acs_medicaid.txt")
+ins.plot.dat <- mcaid.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %>%
+  mutate(perc_unins=uninsured/adult_pop) %>%
+  group_by(expand_ever, year) %>% summarize(mean=mean(perc_unins))
+
+question4 <- ggplot(data=ins.plot.dat, aes(x=year,y=mean,group=expand_ever,linetype=expand_ever)) + 
+  geom_line() + geom_point() + theme_bw() +
+  geom_vline(xintercept=2013.5, color="red") +
+  geom_text(data = ins.plot.dat %>% filter(year == 2016), 
+            aes(label = c("Non-expansion","Expansion"),
+                x = year + 1,
+                y = mean)) +
+  guides(linetype="none") +
+  labs(
+    x="Year",
+    y="Fraction Uninsured",
+    title="Share of Uninsured over Time"
+  )
+question4
+
+#Question 5
+mcaid.data <- read_tsv("data/output/acs_medicaid.txt")
+reg.dat <- mcaid.data %>% filter(expand_year==2012, 2015 | is.na(expand_year), !is.na(expand_ever)) %>%
+  mutate(perc_unins=uninsured/adult_pop,
+         post = (year>=2012), 
+         treat=post*expand_ever)
+
+dd.ins.reg <- lm(perc_unins ~ post + expand_ever + post*expand_ever, data=reg.dat)

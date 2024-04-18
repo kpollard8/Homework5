@@ -24,3 +24,4 @@ kff.final <- kff.final %>%
   select(State, expanded, date_adopted)
 
 write_tsv(kff.final,'data/output/medicaid_expansion.txt')
+
