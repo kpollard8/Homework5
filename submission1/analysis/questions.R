@@ -55,6 +55,7 @@ question3
 #question 4
 library(tidyverse)  
 mcaid.data <- read_tsv("data/output/acs_medicaid.txt")
+
 ins.plot.dat <- mcaid.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %>%
   mutate(perc_unins=uninsured/adult_pop) %>%
   group_by(expand_ever, year) %>% summarize(mean=mean(perc_unins))
@@ -133,9 +134,9 @@ reg.dat <- mcaid.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(
 m.dd <- lm(perc_unins ~ post + expand_ever + treat, data=reg.dat)
 
 library(fixest)
-m.twfe <- feols(perc_unins ~ treat | State + year, data=reg.dat)
+m.twfe7 <- feols(perc_unins ~ treat | State + year, data=reg.dat)
 
-question7 <- msummary(list("DD" = m.dd, "TWFE" = m.twfe),
+question7 <- msummary(list("DD" = m.dd, "TWFE" = m.twfe7),
                       shape = term + statistic ~ model, 
                       gof_map = NA,
                       coef_omit = 'Intercept',
@@ -163,10 +164,10 @@ m.dd <- lm(perc_unins ~ post + expand_ever + treat, data = reg.dat)
 
 # Run the Two-Way Fixed Effects (TWFE) regression
 library(fixest)
-m.twfe <- feols(perc_unins ~ treat | State + year, data = reg.dat)
+m.twfe8 <- feols(perc_unins ~ treat | State + year, data = reg.dat)
 
 
-question8 <- msummary(list("DD" = m.dd, "TWFE" = m.twfe),
+question8 <- msummary(list("DD" = m.dd, "TWFE" = m.twfe8),
                       shape = term + statistic ~ model, 
                       gof_map = NA,
                       coef_omit = 'Intercept',
@@ -187,11 +188,11 @@ reg.dat <- mcaid.data %>%
          post = (year>=2014), 
          treat=post*expand_ever)
 
-mod.twfe <- feols(perc_unins~i(year, expand_ever, ref=2013) | State + year,
+mod.twfe9 <- feols(perc_unins~i(year, expand_ever, ref=2013) | State + year,
                   cluster=~State,
                   data=reg.dat)
 
-question9 <- iplot(mod.twfe, 
+question9 <- iplot(mod.twfe9, 
                    xlab = 'Time to treatment',
                    main = 'Event study')
 
@@ -210,11 +211,11 @@ reg.dat <- mcaid.data %>%
          time_to_treat = ifelse(expand_ever==FALSE, 0, year-expand_year),
          time_to_treat = ifelse(time_to_treat < -3, -3, time_to_treat))
 
-mod.twfe <- feols(perc_unins~i(time_to_treat, expand_ever, ref=-1) | State + year,
+mod.twfe10 <- feols(perc_unins~i(time_to_treat, expand_ever, ref=-1) | State + year,
                   cluster=~State,
                   data=reg.dat)
 
-question10 <- iplot(mod.twfe, 
+question10 <- iplot(mod.twfe10, 
                      xlab = 'Time to treatment',
                      main = 'Event study')
 
