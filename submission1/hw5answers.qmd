@@ -118,6 +118,20 @@ knitr::kable(avg_did,
 #question6
 ```
 
+```{r} 
+#| echo: false
+#| label: number6
+#| tbl-cap: "DD"
+
+#library(kableExtra)
+#options(knitr.kable.NA = 0)
+#knitr::kable(question6, 
+             #col.names=c("Intercept", "DD (2014)"),
+             #format.args=list(big.mark=","), booktabs = TRUE) %>%
+             #kable_styling(latex_options=c("scale_down"))
+
+```
+
 \newpage 
 
 \vspace{.2in}
