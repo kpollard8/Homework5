@@ -139,8 +139,7 @@ library(tidyverse)
 
 m.twfe7 <- feols(perc_unins ~ treat | State + year, data=reg.dat)
 
-question7 <- modelsummary(list("DD" = m.dd, "TWFE" = m.twfe7),
-                      shape = term + statistic ~ model, 
+question7 <- modelsummary(list("DD" = m.dd, "TWFE" = m.twfe7), 
                       gof_map = NA,
                       coef_omit = 'Intercept',
                       vcov = ~State)
@@ -171,7 +170,6 @@ m.twfe8 <- feols(perc_unins ~ treat | State + year, data = reg.dat)
 
 
 question8 <- modelsummary(list("DD" = m.dd, "TWFE" = m.twfe8),
-                      shape = term + statistic ~ model, 
                       gof_map = NA,
                       coef_omit = 'Intercept',
                       vcov = ~State)

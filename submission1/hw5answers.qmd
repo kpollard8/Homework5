@@ -133,12 +133,6 @@ modelsummary(list("DD (2014)" = dd.ins.reg),
 #| tbl-cap: Question 7 Table
 
 
-modelsummary(list("DD" = m.dd, "TWFE" = m.twfe7),
-                      shape = term + statistic ~ model, 
-                      gof_map = NA,
-                      coef_omit = 'Intercept')
-
-
 
 ```
 
