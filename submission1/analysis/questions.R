@@ -134,9 +134,12 @@ reg.dat <- mcaid.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(
 m.dd <- lm(perc_unins ~ post + expand_ever + treat, data=reg.dat)
 
 library(fixest)
+library(modelsummary)
+library(tidyverse)
+
 m.twfe7 <- feols(perc_unins ~ treat | State + year, data=reg.dat)
 
-question7 <- msummary(list("DD" = m.dd, "TWFE" = m.twfe7),
+question7 <- modelsummary(list("DD" = m.dd, "TWFE" = m.twfe7),
                       shape = term + statistic ~ model, 
                       gof_map = NA,
                       coef_omit = 'Intercept',
@@ -167,7 +170,7 @@ library(fixest)
 m.twfe8 <- feols(perc_unins ~ treat | State + year, data = reg.dat)
 
 
-question8 <- msummary(list("DD" = m.dd, "TWFE" = m.twfe8),
+question8 <- modelsummary(list("DD" = m.dd, "TWFE" = m.twfe8),
                       shape = term + statistic ~ model, 
                       gof_map = NA,
                       coef_omit = 'Intercept',
