@@ -33,7 +33,7 @@ knitr::opts_chunk$set(warning = FALSE)
 load("Hw5_workspace.Rdata")
 ```
 
-Here is the link to my GitHub Repository:
+Here is the link to my GitHub Repository: https://github.com/kpollard8/Homework5 
 
 Here are my answers for Homework 5. I do the coding in a separate `R` script, but here is the cleaned-up version. I run the analysis separately, save the workspace with only the summary stats, figures, and tables that I need, and then load the workspace in the final qmd. My analysis file with answers and code to all the questions is available in the analysis folder. 
 
@@ -56,7 +56,7 @@ question1
 \vspace{.2in}
 \noindent 2. Discuss the reduction in direct purchase health insurance in later years. Can you list a couple of policies that might have affected the success of the direct purchase insurance market? <br>
 
-After 2016, it seems that direct purchase health insurance declined. 
+After 2016, it seems that direct purchase health insurance declined. One policy that may contribute to this shift is the: Individual Mandate Repeal: One significant policy change was the repeal of the individual mandate under the Affordable Care Act (ACA) in 2017. The individual mandate required most Americans to have health insurance coverage or face a tax penalty. Its repeal removed a financial incentive for individuals to purchase insurance, particularly those who were healthy and might have opted for direct purchase plans instead of employer-sponsored or government-subsidized plans. Also just in general, there was market instability. The instability and uncertainty surrounding the health insurance marketplace post-2016 could have also contributed to the decline in direct purchase health insurance. Changes in regulations, ongoing debates over the future of the ACA, and fluctuating premiums created an environment of uncertainty for both insurers and consumers, potentially leading to fewer individuals opting for direct purchase plans.
 
 
 \newpage 
@@ -127,20 +127,41 @@ modelsummary(list("DD (2014)" = dd.ins.reg),
 \vspace{.2in}
 \noindent 7. Include state and year fixed effects in your estimates. Try using the lfe or fixest package to estimate this instead of directly including the fixed effects. <br>
 
-```{r}
-#| echo: false
-#| label: DD7
-#| tbl-cap: Question 7 Table
+Here is the table for number 7: 
 
 
+|          | DD      | TWFE    |
+|----------|---------|---------|
+| postTRUE | -0.054  |         |
+|          | (-0.003) |         |
+| expand_everTRUE | -0.046 |         |
+|                 | (-0.016)|         |
+| treat    | -0.019  | -0.019  |
+|          | (0.007) | (0.007) |
 
-```
 
 
 \newpage 
 
 \vspace{.2in}
 \noindent 8. Repeat the analysis in question 7 but include all states (even those that expanded after 2014). Are your results different? If so, why? <br>
+
+Here is my table for question 8: 
+
+
+|          | DD      | TWFE    |
+|----------|---------|---------|
+| postTRUE | -0.054  |         |
+|          | (0.003) |         |
+| expand_everTRUE | -0.040 |         |
+|                 | (0.015) |         |
+| treat    | -0.017  | -0.017  |
+|          | (0.006) | (0.006) |
+
+
+The results are similar to when we did just states that expanded in 2014 versus those that never expanded, but they differ in a few ways. One notable difference arises in the coefficient for state expansion (expand_everTRUE). In question 7, where we only considered states that expanded in 2014 versus not at all, the coefficient was estimated to be approximately -0.046 with a standard error of 0.016. However, in question 8, where we included all states regardless of expansion timing, the coefficient decreased slightly to approximately -0.040 with a standard error of 0.015.
+
+This difference in coefficients suggests that including states that expanded after 2014 may have led to a slight attenuation of the estimated effect of state expansion on the outcome variable. One possible explanation for this attenuation could be the inclusion of states that implemented reforms or policies different from those that expanded before 2014. These differences in policy implementation or timing may have diluted the estimated effect of state expansion in question 8 compared to question 7. 
 
 ```{r}
 #| echo: false

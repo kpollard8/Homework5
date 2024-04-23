@@ -105,6 +105,7 @@ print(avg_did)
 library(tidyverse)
 library(modelsummary)
 mcaid.data <- read_tsv("data/output/acs_medicaid.txt")
+
 reg.dat <- mcaid.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %>%
   mutate(perc_unins=uninsured/adult_pop,
          post = (year>=2014), 
@@ -146,6 +147,7 @@ question7 <- modelsummary(list("DD" = m.dd, "TWFE" = m.twfe7),
 
 question7
 
+
 #Question 8 
 
 library(tidyverse)
@@ -175,6 +177,7 @@ question8 <- modelsummary(list("DD" = m.dd, "TWFE" = m.twfe8),
                       vcov = ~State)
 
 question8
+
 
 #Question 9 
 
